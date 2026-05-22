@@ -1,8 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+
+
 
 export default function Home() {
+
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   
@@ -16,6 +22,39 @@ export default function Home() {
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [duration, setDuration] = useState("");
+  const resumeRef = useRef<HTMLDivElement>(null);
+  
+  
+  const downloadPDF = () => {
+  const printContent = document.getElementById("resume-preview");
+
+  if (!printContent) return;
+
+  const printWindow = window.open("", "_blank");
+
+  if (!printWindow) return;
+
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Resume</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        ${printContent.innerHTML}
+      </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+};
 
   return (
     <main className="min-h-screen bg-slate-100 p-10 text-black">
@@ -131,11 +170,22 @@ export default function Home() {
 
 
         {/* Preview */}
-       <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+<div>
 
-        <h2 className="text-2xl font-bold mb-4 text-black">
-        Resume Preview
-        </h2>
+  <button
+    onClick={downloadPDF}
+    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg mb-4"
+  >
+    Download PDF
+  </button>
+
+  <div
+  id="resume-preview"
+  ref={resumeRef}
+  className="bg-white p-8 rounded-xl shadow-lg border border-gray-200"
+>
+    
+        
 
   <div className="text-center border-b pb-4 mb-4">
     <h1 className="text-3xl font-bold text-black">
@@ -226,7 +276,7 @@ export default function Home() {
   {project || "Project title will appear here"}
 </p>
         </div>
-
+       </div>  
       </div>
     </main>
   );
