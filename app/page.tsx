@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -22,6 +22,20 @@ export default function Home() {
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [duration, setDuration] = useState("");
+  const [template, setTemplate] = useState("classic");
+  //const [atsScore, setAtsScore] = useState(0);
+
+  const atsScore =
+  (name ? 15 : 0) +
+  (email ? 15 : 0) +
+  (phone ? 10 : 0) +
+  (linkedin ? 10 : 0) +
+  (summary ? 15 : 0) +
+  (college ? 10 : 0) +
+  (degree ? 10 : 0) +
+  (skills ? 10 : 0) +
+  (project ? 5 : 0);
+  
   const resumeRef = useRef<HTMLDivElement>(null);
   
   
@@ -35,26 +49,105 @@ export default function Home() {
   if (!printWindow) return;
 
   printWindow.document.write(`
-    <html>
-      <head>
-        <title>Resume</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-          }
-        </style>
-      </head>
-      <body>
-        ${printContent.innerHTML}
-      </body>
-    </html>
-  `);
+<html>
+<head>
+<title>Resume</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.profile-photo {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 15px auto;
+}
+</style>
+</head>
+<body>
+${printContent.innerHTML}
+</body>
+</html>
+`);
 
   printWindow.document.close();
   printWindow.focus();
   printWindow.print();
 };
+
+{/*
+const calculateATS = () => {
+  let score = 0;
+
+  if (name.trim()) score += 15;
+  if (email.trim()) score += 15;
+  if (phone.trim()) score += 10;
+  if (linkedin.trim()) score += 10;
+  if (summary.trim()) score += 15;
+  if (college.trim()) score += 10;
+  if (degree.trim()) score += 10;
+  if (skills.trim()) score += 10;
+  if (project.trim()) score += 5;
+
+  setAtsScore(score);
+}; */}
+
+useEffect(() => {
+  const savedData = localStorage.getItem("resumeData");
+
+  if (savedData) {
+    const data = JSON.parse(savedData);
+
+    setName(data.name || "");
+    setEmail(data.email || "");
+    setPhone(data.phone || "");
+    setLinkedin(data.linkedin || "");
+    setSummary(data.summary || "");
+    setCollege(data.college || "");
+    setDegree(data.degree || "");
+    setSkills(data.skills || "");
+    setProject(data.project || "");
+    setCompany(data.company || "");
+    setRole(data.role || "");
+    setDuration(data.duration || "");
+  }
+}, []);
+
+useEffect(() => {
+  const data = {
+    name,
+    email,
+    phone,
+    linkedin,
+    summary,
+    college,
+    degree,
+    skills,
+    project,
+    company,
+    role,
+    duration,
+  };
+
+  localStorage.setItem("resumeData", JSON.stringify(data));
+}, [
+  name,
+  email,
+  phone,
+  linkedin,
+  summary,
+  college,
+  degree,
+  skills,
+  project,
+  company,
+  role,
+  duration,
+]);
 
   return (
     <main className="min-h-screen bg-slate-100 p-10 text-black">
@@ -64,11 +157,26 @@ export default function Home() {
 
       <div className="grid md:grid-cols-2 gap-6">
 
+        
         {/* Form */}
+
         <div className="bg-white p-6 rounded-xl shadow">
           <h2 className="text-2xl font-semibold mb-4 text-black">
             Personal Information
           </h2>
+
+
+           <select
+        value={template}
+        onChange={(e) => setTemplate(e.target.value)}
+        className="w-48 h-10 border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+        >
+        <option value="classic">Classic</option>
+        <option value="modern">Modern</option>
+        <option value="professional">Professional</option>
+        </select>
+
+
 
           <input
             type="text"
@@ -101,6 +209,8 @@ export default function Home() {
   onChange={(e) => setLinkedin(e.target.value)}
   className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
 />
+
+
 
           <textarea
             placeholder="Professional Summary"
@@ -165,12 +275,57 @@ export default function Home() {
   className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
 />
 
+{/* <button
+  onClick={calculateATS}
+  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg mt-3"
+>
+  Check ATS Score
+</button> */}
+
+<button
+  onClick={() => {
+    localStorage.removeItem("resumeData");
+
+    setName("");
+    setEmail("");
+    setPhone("");
+    setLinkedin("");
+    setSummary("");
+    setCollege("");
+    setDegree("");
+    setSkills("");
+    setProject("");
+    setCompany("");
+    setRole("");
+    setDuration("");
+  }}
+  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg mt-3 ml-3"
+>
+  Clear Resume
+</button>
+
 
         </div>
 
 
         {/* Preview */}
 <div>
+
+    <div className="bg-white p-3 rounded-lg shadow mb-3 text-center">
+  <h3
+  className={`font-bold ${
+    atsScore >= 80
+      ? "text-green-600"
+      : atsScore >= 50
+      ? "text-yellow-600"
+      : "text-red-600"
+  }`}
+>
+    ATS Score: {atsScore}/100
+  </h3>
+</div>
+
+
 
   <button
     onClick={downloadPDF}
@@ -181,13 +336,22 @@ export default function Home() {
 
   <div
   id="resume-preview"
-  ref={resumeRef}
-  className="bg-white p-8 rounded-xl shadow-lg border border-gray-200"
+  className={`p-8 border ${
+    template === "classic"
+      ? "bg-white"
+      : template === "modern"
+      ? "bg-blue-50"
+      : "bg-gray-100"
+  }`}
 >
     
         
 
   <div className="text-center border-b pb-4 mb-4">
+    
+
+    
+
     <h1 className="text-3xl font-bold text-black">
       {name || "Your Name"}
     </h1>
