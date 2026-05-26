@@ -23,7 +23,12 @@ export default function Home() {
   const [role, setRole] = useState("");
   const [duration, setDuration] = useState("");
   const [template, setTemplate] = useState("classic");
-  //const [atsScore, setAtsScore] = useState(0);
+  const [showProject, setShowProject] = useState(true);
+  const [showEducation, setShowEducation] = useState(true);
+  const [theme, setTheme] = useState("modern");
+  const [darkMode, setDarkMode] = useState(false);
+const [showSkills, setShowSkills] = useState(true);
+const [showExperience, setShowExperience] = useState(true);
 
   const atsScore =
   (name ? 15 : 0) +
@@ -149,8 +154,17 @@ useEffect(() => {
   duration,
 ]);
 
+
+
+
   return (
-    <main className="min-h-screen bg-slate-100 p-10 text-black">
+    <main
+  className={`min-h-screen p-10 ${
+    darkMode
+      ? "bg-gray-900 text-white"
+      : "bg-slate-100 text-black"
+  }`}
+>
       <h1 className="text-4xl font-bold text-center mb-8 text-black">
         Resume Builder
       </h1>
@@ -160,7 +174,13 @@ useEffect(() => {
         
         {/* Form */}
 
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div
+  className={`p-6 rounded-xl shadow ${
+    darkMode
+      ? "bg-gray-800 text-white"
+      : "bg-white text-black"
+  }`}
+>
           <h2 className="text-2xl font-semibold mb-4 text-black">
             Personal Information
           </h2>
@@ -174,6 +194,9 @@ useEffect(() => {
         <option value="classic">Classic</option>
         <option value="modern">Modern</option>
         <option value="professional">Professional</option>
+        <option value="minimal">Minimal</option>
+        <option value="executive">Executive</option>
+        <option value="creative">Creative</option>
         </select>
 
 
@@ -183,7 +206,11 @@ useEffect(() => {
             placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border p-2 rounded mb-3"
+            className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
           />
 
           <input
@@ -191,7 +218,11 @@ useEffect(() => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border p-2 rounded mb-3"
+            className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
           />
 
           <input
@@ -199,7 +230,11 @@ useEffect(() => {
           placeholder="Phone Number"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+          className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
           />
 
           <input
@@ -207,7 +242,11 @@ useEffect(() => {
   placeholder="LinkedIn URL"
   value={linkedin}
   onChange={(e) => setLinkedin(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
 
@@ -216,7 +255,11 @@ useEffect(() => {
             placeholder="Professional Summary"
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
-            className="w-full border border-gray-400 p-2 rounded text-black bg-white"
+            className={`w-full border p-2 rounded ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
           />
 
           <input
@@ -224,7 +267,11 @@ useEffect(() => {
   placeholder="College Name"
   value={college}
   onChange={(e) => setCollege(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
 <input
@@ -232,7 +279,11 @@ useEffect(() => {
   placeholder="Degree"
   value={degree}
   onChange={(e) => setDegree(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
 <input
@@ -240,7 +291,11 @@ useEffect(() => {
   placeholder="Skills (comma separated)"
   value={skills}
   onChange={(e) => setSkills(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
 <input
@@ -248,7 +303,11 @@ useEffect(() => {
   placeholder="Project Title"
   value={project}
   onChange={(e) => setProject(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white" 
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
 <input
@@ -256,7 +315,11 @@ useEffect(() => {
   placeholder="Company Name"
   value={company}
   onChange={(e) => setCompany(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
 <input
@@ -264,7 +327,11 @@ useEffect(() => {
   placeholder="Role"
   value={role}
   onChange={(e) => setRole(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
 <input
@@ -272,15 +339,48 @@ useEffect(() => {
   placeholder="Duration"
   value={duration}
   onChange={(e) => setDuration(e.target.value)}
-  className="w-full border border-gray-400 p-2 rounded mb-3 text-black bg-white"
+  className={`w-full border p-2 rounded mb-3 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black"
+}`}
 />
 
-{/* <button
-  onClick={calculateATS}
-  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg mt-3"
->
-  Check ATS Score
-</button> */}
+<label className="flex items-center gap-2 mt-4">
+  <input
+    type="checkbox"
+    checked={showProject}
+    onChange={() => setShowProject(!showProject)}
+  />
+  Show Project Section
+</label>
+
+<label className="flex items-center gap-2 mt-2">
+  <input
+    type="checkbox"
+    checked={showEducation}
+    onChange={() => setShowEducation(!showEducation)}
+  />
+  Show Education Section
+</label>
+
+<label className="flex items-center gap-2 mt-2">
+  <input
+    type="checkbox"
+    checked={showSkills}
+    onChange={() => setShowSkills(!showSkills)}
+  />
+  Show Skills Section
+</label>
+
+<label className="flex items-center gap-2 mt-2">
+  <input
+    type="checkbox"
+    checked={showExperience}
+    onChange={() => setShowExperience(!showExperience)}
+  />
+  Show Experience Section
+</label>
 
 <button
   onClick={() => {
@@ -303,6 +403,7 @@ useEffect(() => {
 >
   Clear Resume
 </button>
+
 
 
         </div>
@@ -334,14 +435,45 @@ useEffect(() => {
     Download PDF
   </button>
 
+<button
+  onClick={() => setTemplate("classic")}
+  className="bg-gray-600 text-white px-3 py-2 rounded"
+>
+  Classic
+</button>
+
+<button
+  onClick={() => setTemplate("modern")}
+  className="bg-blue-500 text-white px-3 py-2 rounded"
+>
+  Modern
+</button>
+
+<button
+  onClick={() => setTemplate("corporate")}
+  className="bg-green-600 text-white px-3 py-2 rounded"
+>
+  Corporate
+</button>
+
+<button
+  onClick={() => setDarkMode(!darkMode)}
+  className="bg-black text-white px-3 py-2 rounded"
+>
+  {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+</button>
+
+
   <div
   id="resume-preview"
-  className={`p-8 border ${
-    template === "classic"
-      ? "bg-white"
+  className={`p-8 rounded-xl shadow-lg border ${
+    darkMode
+      ? "bg-gray-800 text-white border-gray-600"
+      : template === "classic"
+      ? "bg-white border-gray-400"
       : template === "modern"
-      ? "bg-blue-50"
-      : "bg-gray-100"
+      ? "bg-blue-50 border-blue-500"
+      : "bg-green-50 border-green-500"
   }`}
 >
     
@@ -352,7 +484,15 @@ useEffect(() => {
 
     
 
-    <h1 className="text-3xl font-bold text-black">
+    <h1
+  className={`text-3xl font-bold ${
+    template === "classic"
+      ? "text-black"
+      : template === "modern"
+      ? "text-blue-700"
+      : "text-green-700"
+  }`}
+>
       {name || "Your Name"}
     </h1>
 
@@ -382,9 +522,15 @@ useEffect(() => {
   {summary || "Professional summary will appear here."}
 </p>
 
-<h4 className="font-bold text-xl border-b-2 border-gray-300 pb-1 mb-3">
-  EDUCATION
-</h4>
+{showEducation && (
+  <div>
+    <h3 className="font-bold text-lg">EDUCATION</h3>
+    <div className="border-t border-gray-300 my-3"></div>
+
+    <p>{degree || "Degree"}</p>
+    <p>{college || "College Name"}</p>
+  </div>
+)}
 
 <div className="mb-4">
   <p className="font-semibold text-lg">
@@ -396,9 +542,14 @@ useEffect(() => {
   </p>
 </div>
 
-<h4 className="font-bold text-xl border-b-2 border-gray-300 pb-1 mb-3">
-  SKILLS
-</h4>
+{showSkills && (
+  <div>
+    <h3 className="font-bold text-lg">SKILLS</h3>
+    <div className="border-t border-gray-300 my-3"></div>
+
+    {/* Skills code here */}
+  </div>
+)}
 
 <div className="flex flex-wrap gap-2 mb-4">
   {skills
@@ -414,34 +565,35 @@ useEffect(() => {
     ))}
 </div>
 
-<h4 className="font-bold text-xl border-b-2 border-gray-300 pb-1 mb-3">
-  PROJECT
-</h4>
+{showProject && (
+  <>
+    
 
-<h4 className="font-bold text-xl border-b-2 border-gray-300 pb-1 mb-3">
-  EXPERIENCE
-</h4>
+    <div>
+      <h3 className="font-bold text-lg ">PROJECT</h3>
+      <div className="border-t border-gray-300 my-3 "></div>
+      <p className="mb-6">
+      {project || "Project Title"}</p>
+    </div>
+  </>
+)}
 
-<div className="mb-4">
-  <p className="font-semibold">
-    {role || "Software Developer Intern"}
-  </p>
+{showExperience && (
+  <div>
+    <h3 className="font-bold text-lg">EXPERIENCE</h3>
+    <div className="border-t border-gray-300 my-3"></div>
 
-  <p className="text-gray-700">
-    {company || "Company Name"}
-  </p>
+    <h4>{role || "Software Developer Intern"}</h4>
+    <p>{company || "Company Name"}</p>
+    <p>{duration || "Jan 2025 - Present"}</p>
+  </div>
+)}
 
-  <p className="text-sm text-gray-500">
-    {duration || "Jan 2025 - Present"}
-  </p>
-</div>
-
-<p>
-  {project || "Project title will appear here"}
-</p>
         </div>
        </div>  
       </div>
     </main>
   );
 }
+
+
