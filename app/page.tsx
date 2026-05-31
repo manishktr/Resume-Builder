@@ -27,6 +27,7 @@ export default function Home() {
   const [showEducation, setShowEducation] = useState(true);
   const [theme, setTheme] = useState("modern");
   const [darkMode, setDarkMode] = useState(false);
+  const [photo, setPhoto] = useState("");
 const [showSkills, setShowSkills] = useState(true);
 const [showExperience, setShowExperience] = useState(true);
 
@@ -162,28 +163,37 @@ useEffect(() => {
   className={`min-h-screen p-10 ${
     darkMode
       ? "bg-gray-900 text-white"
-      : "bg-slate-100 text-black"
+      : "bg-gradient-to-br from-slate-100 to-blue-100 text-black"
   }`}
 >
-      <h1 className="text-4xl font-bold text-center mb-8 text-black">
-        Resume Builder
-      </h1>
+      <div className="text-center mb-8">
+  <h1 className="text-5xl font-bold text-blue-700">
+    Resume Builder
+  </h1>
+
+  <p className="text-gray-600 mt-2">
+    Create Professional ATS-Friendly Resumes
+  </p>
+</div>   
+
 
       <div className="grid md:grid-cols-2 gap-6">
 
         
         {/* Form */}
 
-        <div
-  className={`p-6 rounded-xl shadow ${
+       <div
+  className={`p-6 rounded-2xl shadow-xl border ${
     darkMode
-      ? "bg-gray-800 text-white"
-      : "bg-white text-black"
+      ? "bg-gray-800 text-white border-gray-700"
+      : "bg-white text-black border-gray-200"
   }`}
 >
-          <h2 className="text-2xl font-semibold mb-4 text-black">
-            Personal Information
-          </h2>
+
+  
+         <h2 className="text-3xl font-bold mb-6 text-black-600">
+  Personal Information
+</h2>
 
 
            <select
@@ -206,10 +216,10 @@ useEffect(() => {
             placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`w-full border p-2 rounded mb-3 ${
+            className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
           />
 
@@ -218,10 +228,10 @@ useEffect(() => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`w-full border p-2 rounded mb-3 ${
+            className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
           />
 
@@ -230,10 +240,10 @@ useEffect(() => {
           placeholder="Phone Number"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className={`w-full border p-2 rounded mb-3 ${
+          className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
           />
 
@@ -242,35 +252,56 @@ useEffect(() => {
   placeholder="LinkedIn URL"
   value={linkedin}
   onChange={(e) => setLinkedin(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
+}`}
+/>
+
+
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPhoto(URL.createObjectURL(file));
+    }
+  }}
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+  darkMode
+    ? "bg-gray-700 text-white border-gray-500"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
 
 
+
+
+
+
           <textarea
-            placeholder="Professional Summary"
-            value={summary}
-            onChange={(e) => setSummary(e.target.value)}
-            className={`w-full border p-2 rounded ${
-  darkMode
-    ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
-}`}
-          />
+  placeholder="Professional Summary"
+  value={summary}
+  onChange={(e) => setSummary(e.target.value)}
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+    darkMode
+      ? "bg-gray-700 text-white border-gray-500"
+      : "bg-white text-black border-gray-300"
+  }`}
+/>
 
           <input
   type="text"
   placeholder="College Name"
   value={college}
   onChange={(e) => setCollege(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
@@ -279,10 +310,10 @@ useEffect(() => {
   placeholder="Degree"
   value={degree}
   onChange={(e) => setDegree(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
@@ -291,10 +322,10 @@ useEffect(() => {
   placeholder="Skills (comma separated)"
   value={skills}
   onChange={(e) => setSkills(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
@@ -303,10 +334,10 @@ useEffect(() => {
   placeholder="Project Title"
   value={project}
   onChange={(e) => setProject(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
@@ -315,10 +346,10 @@ useEffect(() => {
   placeholder="Company Name"
   value={company}
   onChange={(e) => setCompany(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
@@ -327,10 +358,10 @@ useEffect(() => {
   placeholder="Role"
   value={role}
   onChange={(e) => setRole(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
@@ -339,10 +370,10 @@ useEffect(() => {
   placeholder="Duration"
   value={duration}
   onChange={(e) => setDuration(e.target.value)}
-  className={`w-full border p-2 rounded mb-3 ${
+  className={`w-full p-3 rounded-xl border mb-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
   darkMode
     ? "bg-gray-700 text-white border-gray-500"
-    : "bg-white text-black"
+    : "bg-white text-black border-gray-400"
 }`}
 />
 
@@ -480,6 +511,26 @@ useEffect(() => {
         
 
   <div className="text-center border-b pb-4 mb-4">
+
+  {photo && (
+  <img
+    src={photo}
+    alt="Profile"
+    width={100}
+    height={100}
+    className="rounded-full mx-auto mb-3 object-cover border"
+    style={{
+      width: "100px",
+      height: "100px",
+      maxWidth: "100px",
+      maxHeight: "100px",
+    }}
+  />
+)}
+
+  {/*<h1 className="text-3xl font-bold">
+    {name || "Your Name"}
+  </h1>*/}
     
 
     
@@ -517,6 +568,15 @@ useEffect(() => {
 <h4 className="font-bold text-xl border-b-2 border-gray-300 pb-1 mb-3">
   PROFESSIONAL SUMMARY
 </h4>
+
+
+
+
+
+
+
+
+
 
 <p className="mb-4">
   {summary || "Professional summary will appear here."}
